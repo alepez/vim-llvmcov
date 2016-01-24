@@ -11,9 +11,13 @@ if !exists('g:llvmcov#tmp')
   let g:llvmcov#tmp = ".tmp/coverage"
 endif
 
-if !exists('g:llvmcov#profile')
-  let g:llvmcov#profile = g:llvmcov#tmp . "/default.profdata"
-endif
+fu! s:GetProfDataPath(tmp)
+  return a:tmp . "/default.profdata"
+endf
+
+fu! s:GetProfRawPath(tmp)
+  return a:tmp . "/default.profraw"
+endf
 
 fu! s:RunShellCommand(cmdline)
   botright vnew
@@ -26,12 +30,20 @@ fu! s:GetLlvmCovCommand(profile, bin, source)
   return "llvm-cov show " . " -instr-profile=" . a:profile . " " . a:bin . " " . a:source " --use-color=0"
 endf
 
+fu! s:GetRefreshDataCommand(tmp, bin)
+	let l:profraw = s:GetProfRawPath(g:llvmcov#tmp)
+  return "! mkdir -p " . a:tmp . " && cd " . a:tmp . " && LLVM_PROFILE_FILE=" . l:profraw . " " . a:bin . " && llvm-profdata merge -o default.profdata default.profraw"
+endf
+
 fu! g:llvmcov#RefreshData()
 	let l:bin = fnamemodify(g:llvmcov#bin, ':p')
-  execute "! mkdir -p " . g:llvmcov#tmp . " && cd " . g:llvmcov#tmp . " && LLVM_PROFILE_FILE=default.profraw " . l:bin . " && llvm-profdata merge -o default.profdata default.profraw"
+	let l:command = s:GetRefreshDataCommand(g:llvmcov#tmp, l:bin)
+  execute l:command
 endf
 
 fu! g:llvmcov#CoverageCurrentFile()
-  let l:command = s:GetLlvmCovCommand(g:llvmcov#profile, g:llvmcov#bin, @%)
+	let l:profdata = s:GetProfDataPath(g:llvmcov#tmp)
+  let l:command = s:GetLlvmCovCommand(l:profdata, g:llvmcov#bin, @%)
+	echom l:command
   call s:RunShellCommand(l:command)
 endf

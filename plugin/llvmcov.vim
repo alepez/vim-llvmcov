@@ -7,4 +7,4 @@
 " ============================================================================
 
 command! -complete=shellcmd -nargs=0 CoverageCurrentFile call g:llvmcov#CoverageCurrentFile()
-
+command! -complete=shellcmd -nargs=0 CoverageRefresh call g:llvmcov#RefreshData()

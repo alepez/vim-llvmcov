@@ -3,12 +3,16 @@
 " License:     The MIT License (MIT)
 " ============================================================================
 
-if !exists('g:llvmcov#profile')
-  let g:llvmcov#profile = "tmp/coverage/default.profdata"
+if !exists('g:llvmcov#bin')
+  let g:llvmcov#bin = "build/test/lib/unit_tests"
 endif
 
-if !exists('g:llvmcov#bin')
-  let g:llvmcov#bin = "./build/test/lib/unit_tests"
+if !exists('g:llvmcov#tmp')
+  let g:llvmcov#tmp = ".tmp/coverage"
+endif
+
+if !exists('g:llvmcov#profile')
+  let g:llvmcov#profile = g:llvmcov#tmp . "/default.profdata"
 endif
 
 fu! s:RunShellCommand(cmdline)
@@ -23,13 +27,11 @@ fu! s:GetLlvmCovCommand(profile, bin, source)
 endf
 
 fu! g:llvmcov#RefreshData()
-  " FIXME
+	let l:bin = fnamemodify(g:llvmcov#bin, ':p')
+  execute "! mkdir -p " . g:llvmcov#tmp . " && cd " . g:llvmcov#tmp . " && LLVM_PROFILE_FILE=default.profraw " . l:bin . " && llvm-profdata merge -o default.profdata default.profraw"
 endf
 
 fu! g:llvmcov#CoverageCurrentFile()
   let l:command = s:GetLlvmCovCommand(g:llvmcov#profile, g:llvmcov#bin, @%)
   call s:RunShellCommand(l:command)
 endf
-
-command! -complete=shellcmd -nargs=0 CoverageCurrentFile call s:CoverageCurrentFile()
-

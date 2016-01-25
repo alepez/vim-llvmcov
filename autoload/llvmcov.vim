@@ -32,7 +32,7 @@ endf
 
 fu! s:GetRefreshDataCommand(tmp, bin)
 	let l:profraw = s:GetProfRawPath(g:llvmcov#tmp)
-  return "! mkdir -p " . a:tmp . " && cd " . a:tmp . " && LLVM_PROFILE_FILE=" . l:profraw . " " . a:bin . " && llvm-profdata merge -o default.profdata default.profraw"
+  return "! mkdir -p " . a:tmp . " && cd " . a:tmp . " && LLVM_PROFILE_FILE=default.profraw " . a:bin . " && llvm-profdata merge -o default.profdata default.profraw"
 endf
 
 fu! g:llvmcov#RefreshData()
@@ -44,6 +44,5 @@ endf
 fu! g:llvmcov#CoverageCurrentFile()
 	let l:profdata = s:GetProfDataPath(g:llvmcov#tmp)
   let l:command = s:GetLlvmCovCommand(l:profdata, g:llvmcov#bin, @%)
-	echom l:command
   call s:RunShellCommand(l:command)
 endf

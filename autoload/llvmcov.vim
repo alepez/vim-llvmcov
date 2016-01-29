@@ -37,12 +37,12 @@ endf
 
 fu! g:llvmcov#RefreshData()
 	let l:bin = fnamemodify(g:llvmcov#bin, ':p')
-	let l:command = s:GetRefreshDataCommand(g:llvmcov#tmp, l:bin)
-  execute l:command
+	let l:cmd = s:GetRefreshDataCommand(g:llvmcov#tmp, l:bin)
+  execute l:cmd
 endf
 
 fu! g:llvmcov#CoverageCurrentFile()
 	let l:profdata = s:GetProfDataPath(g:llvmcov#tmp)
-  let l:command = s:GetLlvmCovCommand(l:profdata, g:llvmcov#bin, @%)
-  call s:RunShellCommand(l:command)
+  let l:cmd = s:GetLlvmCovCommand(l:profdata, g:llvmcov#bin, @%)
+  call s:RunShellCommand(l:cmd)
 endf

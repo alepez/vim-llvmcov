@@ -1,9 +1,11 @@
 # vim-llvmcov
 
-**Vim plugin to show code coverage with llvm com**.
+**Vim plugin to show code coverage with llvm cov tool**.
 
 The llvm-cov tool shows code coverage information for programs that are
-instrumented to emit profile data
+instrumented to emit profile data.
+
+This plugin works with languages supported by llvm: C,C++,Objective-C.
 
 ## Usage
 

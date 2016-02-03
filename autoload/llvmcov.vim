@@ -7,16 +7,16 @@ if !exists('g:llvmcov#bin')
   let g:llvmcov#bin = "build/test/lib/unit_tests"
 endif
 
-if !exists('g:llvmcov#tmp')
-  let g:llvmcov#tmp = ".tmp/coverage"
+if !exists('g:llvmcov#pwd')
+  let g:llvmcov#pwd = "."
 endif
 
-fu! s:GetProfDataPath(tmp)
-  return a:tmp . "/default.profdata"
+fu! s:GetProfDataPath(pwd)
+  return a:pwd . "/default.profdata"
 endf
 
-fu! s:GetProfRawPath(tmp)
-  return a:tmp . "/default.profraw"
+fu! s:GetProfRawPath(pwd)
+  return a:pwd . "/default.profraw"
 endf
 
 fu! s:RunShellCommand(cmdline)
@@ -30,19 +30,19 @@ fu! s:GetLlvmCovCommand(profile, bin, source)
   return "llvm-cov show " . " -instr-profile=" . a:profile . " " . a:bin . " " . a:source " --use-color=0"
 endf
 
-fu! s:GetRefreshDataCommand(tmp, bin)
-	let l:profraw = s:GetProfRawPath(g:llvmcov#tmp)
-  return "! mkdir -p " . a:tmp . " && cd " . a:tmp . " && LLVM_PROFILE_FILE=default.profraw " . a:bin . " && llvm-profdata merge -o default.profdata default.profraw"
+fu! s:GetRefreshDataCommand(pwd, bin)
+	let l:profraw = s:GetProfRawPath(g:llvmcov#pwd)
+  return "! mkdir -p " . a:pwd . " && cd " . a:pwd . " && LLVM_PROFILE_FILE=default.profraw " . a:bin . " && llvm-profdata merge -o default.profdata default.profraw"
 endf
 
 fu! g:llvmcov#RefreshData()
 	let l:bin = fnamemodify(g:llvmcov#bin, ':p')
-	let l:cmd = s:GetRefreshDataCommand(g:llvmcov#tmp, l:bin)
+	let l:cmd = s:GetRefreshDataCommand(g:llvmcov#pwd, l:bin)
   execute l:cmd
 endf
 
 fu! g:llvmcov#CoverageCurrentFile()
-	let l:profdata = s:GetProfDataPath(g:llvmcov#tmp)
+	let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
   let l:cmd = s:GetLlvmCovCommand(l:profdata, g:llvmcov#bin, @%)
   call s:RunShellCommand(l:cmd)
 endf

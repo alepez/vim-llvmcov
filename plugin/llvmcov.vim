@@ -8,3 +8,5 @@
 
 command! -complete=shellcmd -nargs=0 CoverageCurrentFile call g:llvmcov#CoverageCurrentFile()
 command! -complete=shellcmd -nargs=0 CoverageRefresh call g:llvmcov#RefreshData()
+command! -complete=shellcmd -nargs=0 CoverageReportCurrentFile call g:llvmcov#CoverageReportCurrentFile()
+command! -complete=shellcmd -nargs=0 CoverageReport call g:llvmcov#CoverageReport()

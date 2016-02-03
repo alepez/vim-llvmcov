@@ -26,6 +26,10 @@ fu! s:RunShellCommand(cmdline)
   setlocal nomodifiable
 endf
 
+fu! s:GetReportCommand(profile, bin, source)
+  return "llvm-cov report " . " -instr-profile=" . a:profile . " " . a:bin . " " . a:source " --use-color=0"
+endf
+
 fu! s:GetLlvmCovCommand(profile, bin, source)
   return "llvm-cov show " . " -instr-profile=" . a:profile . " " . a:bin . " " . a:source " --use-color=0"
 endf
@@ -44,5 +48,17 @@ endf
 fu! g:llvmcov#CoverageCurrentFile()
 	let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
   let l:cmd = s:GetLlvmCovCommand(l:profdata, g:llvmcov#bin, @%)
+  call s:RunShellCommand(l:cmd)
+endf
+
+fu! g:llvmcov#CoverageReport()
+	let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
+  let l:cmd = s:GetReportCommand(l:profdata, g:llvmcov#bin, '')
+  call s:RunShellCommand(l:cmd)
+endf
+
+fu! g:llvmcov#CoverageReportCurrentFile()
+	let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
+  let l:cmd = s:GetReportCommand(l:profdata, g:llvmcov#bin, @%)
   call s:RunShellCommand(l:cmd)
 endf

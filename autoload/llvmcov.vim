@@ -24,6 +24,7 @@ fu! s:RunShellCommand(cmdline)
   setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
   execute 'silent read !'. a:cmdline
   setlocal nomodifiable
+  call s:HighlightNoCoverage()
 endf
 
 fu! s:GetReportCommand(profile, bin, source)
@@ -37,6 +38,11 @@ endf
 fu! s:GetRefreshDataCommand(pwd, bin)
 	let l:profraw = s:GetProfRawPath(g:llvmcov#pwd)
   return "! mkdir -p " . a:pwd . " && cd " . a:pwd . " && LLVM_PROFILE_FILE=default.profraw " . a:bin . " && llvm-profdata merge -o default.profdata default.profraw"
+endf
+
+fu! s:HighlightNoCoverage()
+  highlight CoverageNone term=reverse ctermbg=52 gui=undercurl guisp=#FF0000
+  match CoverageNone /\ \+0|.*/
 endf
 
 fu! g:llvmcov#RefreshData()

@@ -7,7 +7,7 @@ instrumented to emit profile data.
 
 This plugin works with languages supported by llvm: C,C++,Objective-C.
 
-[![asciicast](https://asciinema.org/a/35464.png)](https://asciinema.org/a/35464)
+[![asciicast](https://asciinema.org/a/35464.png)](https://asciinema.org/a/35464?autoplay=1)
 
 ## Usage
 

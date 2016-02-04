@@ -54,7 +54,8 @@ endf
 fu! g:llvmcov#CoverageCurrentFile()
 	let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
   let l:cmd = s:GetLlvmCovCommand(l:profdata, g:llvmcov#bin, @%)
-  let l:current_line = line('.')
+  let l:current_line = line('.') + 2 " FIXME +2 is a fix for bad llvm-cov output
+  windo set scrollbind
   call s:RunShellCommand(l:cmd)
   execute ':0' . l:current_line
 endf

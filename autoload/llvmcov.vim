@@ -36,7 +36,7 @@ fu! s:GetLlvmCovCommand(profile, bin, source)
 endf
 
 fu! s:GetRefreshDataCommand(pwd, bin)
-	let l:profraw = s:GetProfRawPath(g:llvmcov#pwd)
+  let l:profraw = s:GetProfRawPath(g:llvmcov#pwd)
   return "! mkdir -p " . a:pwd . " && cd " . a:pwd . " && LLVM_PROFILE_FILE=default.profraw " . a:bin . " && llvm-profdata merge -o default.profdata default.profraw"
 endf
 
@@ -46,13 +46,13 @@ fu! s:HighlightNoCoverage()
 endf
 
 fu! g:llvmcov#RefreshData()
-	let l:bin = fnamemodify(g:llvmcov#bin, ':p')
-	let l:cmd = s:GetRefreshDataCommand(g:llvmcov#pwd, l:bin)
+  let l:bin = fnamemodify(g:llvmcov#bin, ':p')
+  let l:cmd = s:GetRefreshDataCommand(g:llvmcov#pwd, l:bin)
   execute l:cmd
 endf
 
 fu! g:llvmcov#CoverageCurrentFile()
-	let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
+  let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
   let l:cmd = s:GetLlvmCovCommand(l:profdata, g:llvmcov#bin, @%)
   let l:current_line = line('.') + 2 " FIXME +2 is a fix for bad llvm-cov output
   windo set scrollbind
@@ -61,13 +61,13 @@ fu! g:llvmcov#CoverageCurrentFile()
 endf
 
 fu! g:llvmcov#CoverageReport()
-	let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
+  let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
   let l:cmd = s:GetReportCommand(l:profdata, g:llvmcov#bin, '')
   call s:RunShellCommand(l:cmd)
 endf
 
 fu! g:llvmcov#CoverageReportCurrentFile()
-	let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
+  let l:profdata = s:GetProfDataPath(g:llvmcov#pwd)
   let l:cmd = s:GetReportCommand(l:profdata, g:llvmcov#bin, @%)
   call s:RunShellCommand(l:cmd)
 endf

@@ -16,8 +16,8 @@ This plugin works with languages supported by llvm: C,C++,Objective-C.
 Set the path to the executable and eventually the working directory:
 
 ```
-let g:llvmcov#bin = "build/test/lib/unit_tests"
-let g:llvmcov#pwd = "."
+:let g:llvmcov#bin = "build/test/lib/unit_tests"
+:let g:llvmcov#pwd = "."
 ```
 
 ### Refresh coverage info

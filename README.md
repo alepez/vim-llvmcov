@@ -50,7 +50,7 @@ the open source community!
 
 ## Self-Promotion
 
-Like vim-gtest?  Follow the repository on
+Like vim-llvcov?  Follow the repository on
 [GitHub](https://github.com/alepez/vim-llvmcov) and vote for it on
 [vim.org](http://www.vim.org/scripts/script.php?script_id=5323). And if you're
 feeling especially charitable, follow [Alessandro Pezzato](http://pezzato.net/)

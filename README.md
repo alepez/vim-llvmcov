@@ -13,7 +13,7 @@ This plugin works with languages supported by llvm: C,C++,Objective-C.
 
 ###
 
-Set the path to the executable and eventually the working directory:
+Set the path to the executable and (optionally) the working directory:
 
 ```
 :let g:llvmcov#bin = "build/test/lib/unit_tests"
